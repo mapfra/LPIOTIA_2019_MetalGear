@@ -25,7 +25,7 @@ def task(quit_event):
                     print('Recognized %s' % text)
                     if 'play music' in text:
                         print('I will play music!')
-                        os.system('madplay Tchaikovsky_Concerto_No.1p.mp3')
+                        #os.system('madplay Tchaikovsky_Concerto_No.1p.mp3')
             except Exception as e:               
                 print(e.message)                 
 
