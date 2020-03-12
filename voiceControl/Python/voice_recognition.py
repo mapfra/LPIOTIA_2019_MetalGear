@@ -9,7 +9,7 @@ from respeaker.bing_speech_api import BingSpeechAPI
 os.system('madplay')               
 
 # get a key from https://www.microsoft.com/cognitive-services/en-us/speech-api
-BING_KEY = ''      
+BING_KEY = '669b1694acd741c3ae55548caf4eb96f'      
 
 def task(quit_event):                                                         
     mic = Microphone(quit_event=quit_event)                                   
