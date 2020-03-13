@@ -9,6 +9,7 @@
 
 import processing.serial.*;
 import processing.net.*; 
+import java.util.Arrays;
 
 class Communication {
   private PApplet parent;
@@ -25,8 +26,10 @@ class Communication {
     readTimeout = 500;
     if (isSerialAvailable) {
       serial.clear();
+      println(Time() + "order sent " + Arrays.toString(outData));
       SerialWrite(outData);
       inData = SerialRead();
+      println(Time() + "Order callback received " + Arrays.toString(inData));
     } else if (isClientAvailable) {
       client.clear();
       ClientWrite(outData);
