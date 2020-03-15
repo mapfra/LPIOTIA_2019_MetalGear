@@ -1,0 +1,60 @@
+﻿METAL GEAR 
+Cahier des charges
+
+
+1 – Description générale du projet
+
+
+Le but du projet est de contrôler le freenove hexapod par la voix en utilisant le respeaker monté sur un raspberry pi 4 et de NodeMCU communiquant avec le module WiFi du freenove hexapod (esp8266). Une application web et mobile sera également mise en place pour pouvoir contrôler l'araignée et visualiser le journal d’événements.
+2 – Décomposition des Fonctionnalités
+
+
+* Un micro service web (API) de coordination
+* Une application web et Mobile pour contrôler l’araignée à distance
+* Un serveur NodeMCU (qui joue le rôle du broker MQTT)
+* Une application d’écoute de commandes vocales pour contrôler ensuite l’araignée à distance
+* Configuration de l’araignée (Arduino)
+
+
+3 – Schéma d’architecture
+
+
+  
+
+4 - Scénarios / Acteurs / Rôles
+
+
+Scénarios :
+ 
+
+
+* ReSpeaker : Les commandes vocales sont traitées sur la raspberry. Le deamon python convertit les commandes en ordres à envoyer à l’hexapod, il générère une requête http pour le NodeMCU qui va ensuite over WiFi envoyer l’ordre traité (en fonction du besoin) au module esp8266 de l’hexapod.
+
+
+* End devices : L’application mobile va envoyer des commandes d’ordres pour l’araignée en passant par l’API du serveur web. Celui ci communiquera directement avec le NodeMCU en http.Ensuite, le NodeMCU enverra les ordres traités à l’hexapod.
+Acteurs :
+Les acteurs sont les personnes amenées à piloter l’hexapod...
+Rôles :
+Les acteurs seront en mesure de contrôler l’hexapod soit par l'intermédiaire d’une application mobile/web soit à la voix, leur rôle sera donc celui d’un pilote de drone...
+5 – Répartitions du projet
+
+
+* Louis Hervé : Serveur NodeMCU, Application d’écoute de commandes vocales
+* Flavien Jalabert : Serveur web avec API, Application web et Mobile
+* Florent Cordier : Configuration de l’araignée (Arduino), Application web et Mobile
+* Stephane Azoulay : Serveur NodeMCU et configuration réseau
+
+
+6 - Délais de réalisations
+
+
+
+
+7 - Définitions
+
+
+Respeaker : Est une carte d'extension à quadruple microphone pour Raspberry Pi conçue pour les applications IA et voix. Cela signifie que vous pouvez créer un produit vocal plus puissant et plus flexible qui intègre le service Amazon Alexa Voice, l'Assistant Google, etc.
+
+
+NodeMCU : NodeMCU est une plate-forme open source IoT, matérielle et logicielle, basée sur un SoC Wifi ESP8266 ESP-12 fabriqué par Espressif Systems (ca). Le terme « NodeMCU » se réfère par défaut au firmware plutôt qu'aux kits de développement. Le firmware, permettant nativement l'exécution de scripts écrits en Lua, est basé sur le projet eLua7 et construit sur le SDK Espressif Non-OS pour ESP82668. Il utilise de nombreux projets open source comme lua-cjson et spiffs.
+Azoulay-Cordier-Jalabert-Hervé
