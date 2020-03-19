@@ -5,13 +5,15 @@ github Bruneau-Map-Belleudy
 		   nommage -<suivi_mateal_gear>.ppt ou.doc
 		   suivi audio visio avec prof début de séance timing à prévoir
 
-Aujourd'hui
-		   cahier des charges du projet avec répartition du travail de chacun
-		   prêt de matériel
-           
+Vendredi (13/03/2020)
+		   Cahier des charges du projet avec répartition du travail de chacun
+		   prêt de matériel.
            
            CDC
            a.description générale du projet
            b.décomposition des fonctionnalités(code couleur/cours)
            c.schéma d'architecture logicielle/matériel(code couleur/cours)
            d.scénarios/acteurs/rôles
+		   
+Jeudi (19/03/2020)
+			
