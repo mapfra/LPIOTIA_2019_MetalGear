@@ -14,6 +14,4 @@ Vendredi (13/03/2020)
            b.décomposition des fonctionnalités(code couleur/cours)
            c.schéma d'architecture logicielle/matériel(code couleur/cours)
            d.scénarios/acteurs/rôles
-		   
-Jeudi (19/03/2020)
 			
