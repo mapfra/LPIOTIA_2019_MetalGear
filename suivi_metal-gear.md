@@ -15,3 +15,5 @@ Vendredi (13/03/2020)
            c.schéma d'architecture logicielle/matériel(code couleur/cours)
            d.scénarios/acteurs/rôles
 			
+Le suivi se trouve sous forme de diapositive sur le lien suivant :
+https://docs.google.com/presentation/d/11GAVURkxqzd1Z4wjgNlgdTQ-mCX92iRXqgw0x6RaPfs
