@@ -1,0 +1,13 @@
+{
+    "name": "jmbruneau/mvc-core",
+    "description": "Basic MVC PHP Framework",
+    "authors": [
+        {
+            "name": "Jean-Michel BRUNEAU",
+            "email": "jean-michel@netspace.mc"
+        }
+    ],
+    "require": {
+        "twbs/bootstrap": "^4.4"
+    }
+}
