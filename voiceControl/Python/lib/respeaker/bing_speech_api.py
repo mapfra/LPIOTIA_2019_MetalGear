@@ -2,7 +2,7 @@
  Bing Speech To Text (STT) and Text To Speech (TTS)
 
  ReSpeaker Python Library
- Copyright (c) 2020 Seeed Technology Limited.
+ Copyright (c) 2016 Seeed Technology Limited.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -116,6 +116,7 @@ class BingSpeechAPI:
         }
 
         url = "https://francecentral.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1"
+
         response = self.session.post(url, params=params, headers=headers, data=data)
 
         if response.status_code != 200:
@@ -125,11 +126,11 @@ class BingSpeechAPI:
 
         if show_all:
             return result
-        if "header" not in result or "lexical" not in result["header"]:
+        if "NBest" not in result or "Lexical" not in result["NBest"][0]:
             raise ValueError('Unexpected response: {}'.format(result))
-        return result["header"]["lexical"]
+        return result["NBest"][0]["Lexical"]
 
-    def synthesize(self, text, language="en-US", gender="Female", stream=None, chunk_size=4096):
+    def synthesize(self, text, language="fr-FR", gender="Male", stream=None, chunk_size=4096):
         self.authenticate()
 
         if language not in self.locales.keys():
@@ -214,7 +215,7 @@ def main():
             print('STT:{}'.format(text.encode('utf-8')))
             print('Stream mode:{}'.format('yes' if stream else 'no'))
         except RequestError as e:
-            print("Could not request results from Microsoft Bing Voice Recognition service; {0}".format(e))
+            ("Could not request results from Microsoft Bing Voice Recognition service; {0}".format(e))
 
     texts = [
         'Your beliefs become your thoughts',
