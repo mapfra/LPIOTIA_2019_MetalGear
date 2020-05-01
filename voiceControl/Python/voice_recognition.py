@@ -28,10 +28,10 @@ def task(quit_event):
 			if text == 'avance':
 				#Faire un appel API
 				API_ENDPOINT = url_api+"movement/forward/80"
-				res = r.get(API_ENDPOINT)
+				res = r.put(API_ENDPOINT)
 			if text == 'recule':
 				API_ENDPOINT = url_api+"movement/back/80"
-				res = r.get(API_ENDPOINT)
+				res = r.put(API_ENDPOINT)
 			#if text == 'tourne a droite':
 			#if text == 'tourne a gauche':
 			#if text == 'twist':
