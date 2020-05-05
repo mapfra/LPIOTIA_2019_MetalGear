@@ -1,0 +1,163 @@
+'use strict';
+
+let _ = require('lodash'),
+    config = require('../config'),
+    mongoose = require('mongoose'),
+    chalk = require('chalk'),
+    crypto = require('crypto'),
+    es6Promise = require('es6-promise').Promise;
+
+// global seed options object
+let seedOptions = {};
+
+function removeUser (user) {
+    return new es6Promise((resolve, reject) => {
+        let User = mongoose.model('User');
+
+        User.find({username: user.username}).remove((err) => {
+            if (err) {
+                reject(new Error('Failed to remove local ' + user.username));
+            }
+            resolve();
+        });
+    });
+}
+
+function saveUser (user) {
+    return function () {
+        return new es6Promise((resolve, reject) => {
+            // Then save the user
+            user.save((err, theuser) => {
+                if (err) {
+                    reject(new Error('Failed to add local ' + user.username));
+                } else {
+                    resolve(theuser);
+                }
+            });
+        });
+    };
+}
+
+function checkUserNotExists (user) {
+    return new es6Promise((resolve, reject) => {
+        let User = mongoose.model('User');
+
+        User.find({username: user.username}, (err, users) => {
+            if (err) {
+                reject(new Error('Failed to find local account ' + user.username));
+            }
+
+            if (users.length === 0) {
+                resolve();
+            } else {
+                reject(new Error('Failed due to local account already exists: ' + user.username));
+            }
+        });
+    });
+}
+
+function reportSuccess (password) {
+    return function (user) {
+        return new es6Promise((resolve, reject) => {
+            if (seedOptions.logResults) {
+                console.log(chalk.bold.red('Database Seeding:\t\t\tLocal ' + user.username + ' added with password set to ' + password));
+            }
+            resolve();
+        });
+    };
+}
+
+// Save the specified user with the password provided from the resolved promise
+function seedTheUser (user) {
+    return function (password) {
+        return new es6Promise((resolve, reject) => {
+
+            let User = mongoose.model('User');
+            // Set the new password
+
+            user.password = password;
+
+            if (user.username === seedOptions.seedAdmin.username && process.env.NODE_ENV === 'production') {
+                checkUserNotExists(user)
+                    .then(saveUser(user))
+                    .then(reportSuccess(password))
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            } else {
+                removeUser(user)
+                    .then(saveUser(user))
+                    .then(reportSuccess(password))
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            }
+        });
+    };
+}
+
+// Report the error
+function reportError (reject) {
+    return function (err) {
+        if (seedOptions.logResults) {
+            console.log();
+            console.log('Database Seeding:\t\t\t' + err);
+            console.log();
+        }
+        reject(err);
+    };
+}
+
+module.exports.start = function start (options) {
+    // Initialize the default seed options
+    seedOptions = _.clone(config.seedDB.options, true);
+
+    // Check for provided options
+
+    if (_.has(options, 'logResults')) {
+        seedOptions.logResults = options.logResults;
+    }
+
+    if (_.has(options, 'seedUser')) {
+        seedOptions.seedUser = options.seedUser;
+    }
+
+    if (_.has(options, 'seedAdmin')) {
+        seedOptions.seedAdmin = options.seedAdmin;
+    }
+
+    let User = mongoose.model('User');
+
+    return new es6Promise((resolve, reject) => {
+
+        let adminAccount = new User(seedOptions.seedAdmin);
+        let userAccount = new User(seedOptions.seedUser);
+
+        // If production only seed admin if it does not exist
+        if (process.env.NODE_ENV === 'production') {
+            User.generateRandomPassphrase()
+                .then(seedTheUser(adminAccount))
+                .then(() => {
+                    resolve();
+                })
+                .catch(reportError(reject));
+        } else {
+            // Add both Admin and User account
+
+            User.generateRandomPassphrase()
+                .then(seedTheUser(userAccount))
+                .then(User.generateRandomPassphrase)
+                .then(seedTheUser(adminAccount))
+                .then(() => {
+                    resolve();
+                })
+                .catch(reportError(reject));
+        }
+    });
+};
