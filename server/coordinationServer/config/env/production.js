@@ -33,9 +33,9 @@ module.exports = {
             stream: {
                 directoryPath: process.env.LOG_DIR_PATH || process.cwd(),
                 fileName: process.env.LOG_FILE || 'access.log',
-                rotatingLogs: { // For more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-                    active: process.env.LOG_ROTATING_ACTIVE || false, // Activate to use rotating logs
-                    fileName: process.env.LOG_ROTATING_FILE || 'access-%DATE%.log', // If rotating logs are active, this fileName setting will be used
+                rotatingLogs: { // For more info on rotating eventLogger - https://github.com/holidayextras/file-stream-rotator#usage
+                    active: process.env.LOG_ROTATING_ACTIVE || false, // Activate to use rotating eventLogger
+                    fileName: process.env.LOG_ROTATING_FILE || 'access-%DATE%.log', // If rotating eventLogger are active, this fileName setting will be used
                     frequency: process.env.LOG_ROTATING_FREQUENCY || 'daily',
                     verbose: process.env.LOG_ROTATING_VERBOSE || false
                 }

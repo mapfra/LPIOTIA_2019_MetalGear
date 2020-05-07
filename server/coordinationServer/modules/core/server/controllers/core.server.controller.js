@@ -1,10 +1,16 @@
 'use strict';
 
+const buttonsList = require("../../../../config/application/buttons.js");
+
 /**
  * Allow to check the server status
  */
 exports.ping = function (req, res) {
     res.send('pong');
+};
+
+exports.renderMainApplication = function (req, res) {
+    res.status(200).json(buttonsList);
 };
 
 /**

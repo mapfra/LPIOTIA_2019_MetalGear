@@ -98,7 +98,7 @@ module.exports = function (grunt) {
             if (err) {
                 return done(err);
             }
-            done();
+            return done();
         });
     });
 
@@ -107,16 +107,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks("grunt-protractor-coverage");
     grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("gruntify-eslint");
-
-    // Make sure upload directory exists
-    grunt.task.registerTask("mkdir:upload", "Task that makes sure upload directory exists.", function () {
-    // Get the callback
-        let done = this.async();
-
-        grunt.file.mkdir(path.normalize(__dirname + "/modules/uploads/users/img/profiles/uploads"));
-
-        done();
-    });
 
     // Connect to the MongoDB instance and load the models
     grunt.task.registerTask("mongoose", "Task that connects to the MongoDB instance and loads the application models.", function () {
@@ -168,7 +158,7 @@ module.exports = function (grunt) {
     grunt.registerTask("eslint", ["eslint"]);
 
     // Run the project tests
-    grunt.registerTask("test", ["env:test", "lint", "mkdir:upload", "server", "mochaTest"]);
+    grunt.registerTask("test", ["env:test", "lint", "server", "mochaTest"]);
     grunt.registerTask("test:server", ["env:test", "lint", "server", "mochaTest"]);
     grunt.registerTask("test:e2e", ["env:test", "lint", "dropdb", "server"]);
 
@@ -176,8 +166,8 @@ module.exports = function (grunt) {
     grunt.registerTask("coverage", ["env:test", "lint"]);
 
     // Run the project in development mode
-    grunt.registerTask("default", ["env:dev", "lint", "mkdir:upload", "concurrent:default"]);
+    grunt.registerTask("default", ["env:dev", "lint", "concurrent:default"]);
 
     // Run the project in debug mode
-    grunt.registerTask("debug", ["env:dev", "lint", "mkdir:upload", "concurrent:debug"]);
+    grunt.registerTask("debug", ["env:dev", "lint", "concurrent:debug"]);
 };

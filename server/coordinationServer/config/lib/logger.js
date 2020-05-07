@@ -54,7 +54,7 @@ function getLogOptions () {
 
         try {
 
-            // Check if we need to use rotating logs
+            // Check if we need to use rotating eventLogger
             if (_.has(options, 'stream.rotatingLogs') && options.stream.rotatingLogs.active) {
 
                 if (options.stream.rotatingLogs.fileName.length && options.stream.directoryPath.length) {
@@ -72,12 +72,12 @@ function getLogOptions () {
 
                 } else {
                     // Throw a new error so we can catch and handle it gracefully
-                    throw new Error('An invalid fileName or directoryPath was provided for the rotating logs option.');
+                    throw new Error('An invalid fileName or directoryPath was provided for the rotating eventLogger option.');
                 }
 
             } else {
 
-                // Create the WriteStream to use for the logs
+                // Create the WriteStream to use for the eventLogger
                 if (options.stream.fileName.length && options.stream.directoryPath.length) {
 
                     // Ensure the log directory exists

@@ -7,6 +7,9 @@ module.exports = function (app) {
     // Define a test route for testing the availability of the server
     app.route('/ping').get(core.ping);
 
+    // Define the main app render route
+    app.route('/main').get(core.renderMainApplication);
+
     // Define error pages
     app.route('/server-error').get(core.renderServerError);
 

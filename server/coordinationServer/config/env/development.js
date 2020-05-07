@@ -28,9 +28,9 @@ module.exports = {
              * stream: {
              *  DirectoryPath: process.cwd(),
              *  FileName: 'access.log',
-             *  RotatingLogs: { // for more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-             *    Active: false, // activate to use rotating logs
-             *    FileName: 'access-%DATE%.log', // if rotating logs are active, this fileName setting will be used
+             *  RotatingLogs: { // for more info on rotating eventLogger - https://github.com/holidayextras/file-stream-rotator#usage
+             *    Active: false, // activate to use rotating eventLogger
+             *    FileName: 'access-%DATE%.log', // if rotating eventLogger are active, this fileName setting will be used
              *    Frequency: 'daily',
              *    Verbose: false
              *  }

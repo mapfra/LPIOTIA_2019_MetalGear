@@ -37,29 +37,5 @@ module.exports = {
     sessionKey: 'sessionId',
     sessionCollection: 'sessions',
     logo: 'modules/core/client/img/logo.png',
-    favicon: 'modules/core/client/img/favicon.ico',
-    seedDB: {
-        seed: process.env.MONGO_SEED || false,
-        options: {
-            logResults: process.env.MONGO_SEED_LOG_RESULTS || true,
-            seedUser: {
-                username: process.env.MONGO_SEED_USER_USERNAME || 'user',
-                provider: 'local',
-                email: process.env.MONGO_SEED_USER_EMAIL || 'user@localhost.com',
-                firstName: 'User',
-                lastName: 'Local',
-                displayName: 'User Local',
-                roles: ['user']
-            },
-            seedAdmin: {
-                username: process.env.MONGO_SEED_ADMIN_USERNAME || 'admin',
-                provider: 'local',
-                email: process.env.MONGO_SEED_ADMIN_EMAIL || 'admin@localhost.com',
-                firstName: 'Admin',
-                lastName: 'Local',
-                displayName: 'Admin Local',
-                roles: ['user', 'admin']
-            }
-        }
-    }
+    favicon: 'modules/core/client/img/favicon.ico'
 };

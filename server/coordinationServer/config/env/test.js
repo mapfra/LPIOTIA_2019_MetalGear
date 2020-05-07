@@ -29,9 +29,9 @@ module.exports = {
             stream: {
                 directoryPath: process.cwd(),
                 fileName: 'access.log',
-                rotatingLogs: { // For more info on rotating logs - https://github.com/holidayextras/file-stream-rotator#usage
-                    active: false, // Activate to use rotating logs
-                    fileName: 'access-%DATE%.log', // If rotating logs are active, this fileName setting will be used
+                rotatingLogs: { // For more info on rotating eventLogger - https://github.com/holidayextras/file-stream-rotator#usage
+                    active: false, // Activate to use rotating eventLogger
+                    fileName: 'access-%DATE%.log', // If rotating eventLogger are active, this fileName setting will be used
                     frequency: 'daily',
                     verbose: false
                 }
@@ -41,30 +41,6 @@ module.exports = {
     port: process.env.PORT || 3001,
     app: {
         title: defaultEnvConfig.app.title + ' - Test Environment'
-    },
-    seedDB: {
-        seed: process.env.MONGO_SEED === 'true',
-        options: {
-            logResults: process.env.MONGO_SEED_LOG_RESULTS !== 'false',
-            seedUser: {
-                username: process.env.MONGO_SEED_USER_USERNAME || 'user',
-                provider: 'local',
-                email: process.env.MONGO_SEED_USER_EMAIL || 'user@localhost.com',
-                firstName: 'User',
-                lastName: 'Local',
-                displayName: 'User Local',
-                roles: ['user']
-            },
-            seedAdmin: {
-                username: process.env.MONGO_SEED_ADMIN_USERNAME || 'admin',
-                provider: 'local',
-                email: process.env.MONGO_SEED_ADMIN_EMAIL || 'admin@localhost.com',
-                firstName: 'Admin',
-                lastName: 'Local',
-                displayName: 'Admin Local',
-                roles: ['user', 'admin']
-            }
-        }
     },
     // This config is set to true during grunt coverage
     coverage: process.env.COVERAGE || false
