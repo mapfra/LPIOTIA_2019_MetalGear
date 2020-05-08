@@ -106,13 +106,28 @@ h2 {
     -webkit-animation:fade 3000ms infinite;
 }
 
-.button {
-   background-color: #4CAF50; /* Green */
-   border: none;
-   color: white;
-   padding: 15px 32px;
-   text-align: center;
-   text-decoration: none;
-   display: inline-block;
-   font-size: 16px;
-}
+button[name="misc"] {
+  	  color : blue;
+	  }
+
+button[name="ping"] {
+  	  color : red;
+	  }
+button[name="crawl"] {
+  	  color : green;
+	  }
+button[name="turns"] {
+  	  color : yellow;
+	  }
+
+button[name="height"] {
+
+	  }
+
+#zone {
+    margin: auto;
+  	width: 50%;
+  	border: 3px solid green;
+  	padding: 10px;
+     }
+

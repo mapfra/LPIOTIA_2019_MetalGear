@@ -3,15 +3,6 @@
 <head>
 	<link rel="stylesheet" href="css/index.css">
 	<meta charset="UTF-8">
-	<title>Lecture et parsing d'un fichier JSON</title>
-	<style>
-      #zone {
-     	margin: auto;
-  		width: 50%;
-  		border: 3px solid green;
-  		padding: 10px;
-      }
-    </style>
 </head>
 <body>
 <script src="js/jquery-1.11.1.min.js"></script>
@@ -25,10 +16,11 @@
 
           $.getJSON('actions.json ',function(data){
             $.each(data.actions, function(index,d){
-            $.each(d, function(index,action){
-            console.log(action);
+            $.each(d, function(i,action){
+            console.log(index);
             var button = document.createElement("button");
             button.setAttribute("value",action);
+            button.setAttribute("name",index);
             button.innerHTML = action;
             var zone = document.getElementById("zone");
             zone.appendChild(button)
