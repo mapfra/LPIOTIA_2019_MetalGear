@@ -1,0 +1,177 @@
+#!/usr/bin/env python
+
+# coding: utf-8
+
+import argparse
+import socket
+
+def sendHexapod(byte, crawl = False):
+	arr_list = [128, byte, 129]
+	msg = bytearray(arr_list)
+
+	if crawl == True:
+		iteration = max(qty, 2)
+	else:
+		iteration = qty
+	
+	for i in range(0, iteration):
+		try:
+			#On envoi un byte qui correspond a l'action a effectuer
+			s.send(msg)
+			#Partie reception des donnees de l'hexapode
+			content = s.recv(3)
+			data_conc = str(content[1])
+
+			if data_conc == '21':
+				print("[orderStart]:" + data_conc)
+				content = s.recv(3)
+				data_conc = str(content[1])
+
+			if data_conc == '23':
+				print("[orderDone]:" + data_conc + "\n")
+			else:
+				print("[otherData]:" + data_conc + "\n")
+		except:
+			print("[timeoutError]")
+			return 1
+
+def authentification():
+	arr_list = [128, 0, 129]
+	msg = bytearray(arr_list)
+	try:
+		s.send(msg)
+		content = s.recv(3)
+		data_conc = str(content[1])
+		return data_conc
+	except:
+		return '1337'
+
+def getVoltage():
+	arr_list = [128, 10, 129]
+	msg = bytearray(arr_list)
+	try:
+		s.send(msg)
+		content = s.recv(255)
+		data_conc = str(content[2])
+		return data_conc
+	except:
+		return '1337'
+
+def action():
+	if _type == "ping/hexapod":
+		print("[pong]")
+		return 0
+
+	if _type == "ping/voltage":
+		voltage = getVoltage()
+		if voltage == '1337':
+			print("[timeoutError]")
+		else:
+			print("[voltage]:" + voltage)
+		return 0
+	
+	if _type == "movement":
+		print("[crawl]")
+		sendHexapod(110, True)
+		return 0
+	
+	if _type == "movement/forward":
+		print("[crawlForward]")
+		sendHexapod(80, True)
+		return 0
+			
+	if _type == "movement/backward":
+		print("[crawlBackward]")
+		sendHexapod(82, True)
+		return 0
+
+	if _type == "movement/left":
+		print("[crawlLeft]")
+		sendHexapod(84, True)
+		return 0
+
+	if _type == "movement/right":
+		print("[crawlRight]")
+		sendHexapod(86, True)
+		return 0
+
+	if _type == "action/calibrate":
+		print("[calibrate]")
+		sendHexapod(32)
+		return 0
+
+	if _type == "action/wakeup":
+		print("[activeMode]")
+		sendHexapod(92)
+		return 0
+
+	if _type == "action/standby":
+		print("[sleepMode]")
+		sendHexapod(94)
+		return 0
+
+	if _type == "turn/left":
+		print("[turnRight]")
+		sendHexapod(88)
+		return 0
+
+	if _type == "turn/right":
+		print("[turnRight]")
+		sendHexapod(90)
+		return 0
+
+	if _type == "height":
+		print("[changeBodyHeight]")
+		sendHexapod(112)
+		return 0
+
+	if _type == "move":
+		print("[moveBody]")
+		sendHexapod(114)
+		return 0
+
+	if _type == "rotate":
+		print("[rotateBody]")
+		sendHexapod(116)
+		return 0
+
+	if _type == "twist":
+		print("[twistBody]")
+		sendHexapod(118)
+		return 0
+
+	#Dans le cas ou on rentre dans aucune condition
+	print("[wrongType]\n")
+		
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description="Broker Python qui permet d'envoyer des paquets Wifi a l'hexapode")
+
+	parser.add_argument("-t", "--type", help="Type de commande vocale", type=str)
+	parser.add_argument("-q", "--qty", help="Quantite de mouvement a envoyer (cela simule le nombre de metres)", type=int, default=1)
+
+	args = parser.parse_args()
+
+	_type = args.type
+	qty = args.qty
+
+	if _type != None:
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		s.connect(('192.168.4.1', 65535))
+		#On attends 10 secondes, si la data n'est pas envoyee/recue on quitte le programme
+		s.settimeout(10)
+
+		data_conc = authentification()
+
+		if data_conc == '1':
+			print("\n[connected]:" + data_conc + "\n")
+			#Action a envoyer au robot en fonction du type
+			action()
+		elif data_conc == '1337':
+			print("[timeoutError]")
+		else:
+			print("[badData]:" + data_conc)
+
+		print("[connectionClosed]")
+		s.close()
+	else:
+		print("Vous devez ajouter le parametre --type")
