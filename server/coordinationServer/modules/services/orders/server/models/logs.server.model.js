@@ -36,10 +36,4 @@ const Log = new Schema({
     collection: 'logs'
 });
 
-Log.pre('save', function (next) {
-    this.date = new Date();
-
-    next();
-});
-
 module.exports = mongoose.model('logs', Log);
