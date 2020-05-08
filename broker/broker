@@ -157,7 +157,7 @@ if __name__ == '__main__':
 		#On attends 10 secondes, si la data n'est pas envoyee/recue on quitte le programme
 		s.settimeout(10)
 		try:
-			s.connect(('192.168.4.1', 65535))
+			s.connect(('localhost', 65535))
 			
 			data_conc = authentification()
 

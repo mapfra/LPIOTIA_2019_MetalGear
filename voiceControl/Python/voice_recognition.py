@@ -39,7 +39,7 @@ def getQuantityFromString(text):
         for cle in depCentimetre.keys():
             if cle in text:
                 return str(depCentimetre[cle])
-    elif 'mètres' or 'mètre' in text:
+    if 'mètres' or 'mètre' in text:
         for cle in depMetre.keys():
             if cle in text:
                 return str(depMetre[cle])
@@ -56,13 +56,12 @@ def task(quit_event):
                 if text:
                     print('\n\nRecognized %s\n' % text)
                     qty = getQuantityFromString(text)
-                if 'rampe en avant' in text:
-                    #Faire un appel API
-                    #HOST/movement/forward/80
+		    print(qty)
+                if 'avance' in text:
                     API_ENDPOINT = HOST+"/movement/forward/" + qty
                     res = r.get(API_ENDPOINT)
                     print(res)
-                elif 'rampe en arrière'.decode('utf-8') in text:
+                elif 'recule' in text:
                     API_ENDPOINT = HOST+"/movement/backward/" + qty
                     res = r.get(API_ENDPOINT)
                     print(res)

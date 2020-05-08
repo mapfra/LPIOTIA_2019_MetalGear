@@ -37,27 +37,29 @@ function writeBroker (type, data, origin) {
         });
         broker.on('close', (code) => {
             console.log(`child process exited with code ${code}`);
-            response.forEach((ln) => {
-                if (ln.indexOf("[connected]") !== -1 || connectionSuccess) {
-                    connectionSuccess = true;
-                    if (ln.indexOf("[wrongType]") !== -1) {
-                        errorMessage = "WrongTypeProvided";
-                    } else if (ln.indexOf("[orderStart]") !== -1 || orderTransOk) {
-                        orderTransOk = true;
-                        if (ln.indexOf("[orderDone]") !== -1) {
-                            orderDoneWithoutError = true;
+            response.forEach((commands) => {
+                commands.split("\n").forEach((ln) => {
+                    if (ln.indexOf("[connected]") !== -1 || connectionSuccess) {
+                        connectionSuccess = true;
+                        if (ln.indexOf("[wrongType]") !== -1) {
+                            errorMessage = "WrongTypeProvided";
+                        } else if (ln.indexOf("[orderStart]") !== -1 || orderTransOk) {
+                            orderTransOk = true;
+                            if (ln.indexOf("[orderDone]") !== -1) {
+                                orderDoneWithoutError = true;
+                            }
+                        } else if (ln.indexOf("[voltage]") !== -1) {
+                            // eslint-disable-next-line prefer-destructuring
+                            returnData = ln.split(":")[1];
                         }
-                    } else if (ln.indexOf("[voltage]") !== -1) {
-                        // eslint-disable-next-line prefer-destructuring
-                        returnData = ln.split(":")[1];
+                    } else if (ln.indexOf("[timeoutError]") !== -1) {
+                        errorMessage = "TimeoutError";
+                    } else if (ln.indexOf("[badData]") !== -1) {
+                        errorMessage = "Unexpected Error" + ln;
+                    } else if (ln.indexOf("[otherData]") !== -1) {
+                        desc = ln;
                     }
-                } else if (ln.indexOf("[timeoutError]") !== -1) {
-                    errorMessage = "TimeoutError";
-                } else if (ln.indexOf("[badData]") !== -1) {
-                    errorMessage = "Unexpected Error" + ln;
-                } else if (ln.indexOf("[otherData]") !== -1) {
-                    desc = ln;
-                }
+                });
             });
 
             const eventLog = new EventLog({
@@ -69,14 +71,16 @@ function writeBroker (type, data, origin) {
                 errorMessage,
                 desc
             });
+            
+            console.log(eventLog);
 
-            eventLog.save()
-                .then(() => {
-                    resolve(response, returnData, eventLog);
-                })
-                .catch((err) => {
-                    reject(err);
-                });
+            eventLog.save();
+            
+            if (errorMessage) {
+                reject(errorMessage);
+            } else {
+                resolve(response, returnData, eventLog);
+            }
         });
     });
 }
