@@ -5,6 +5,7 @@ const EventLog = mongoose.model('logs');
 
 
 function writeBroker (type, data, origin) {
+    data = Math.floor(data);
     let orderTransOk = false;
     let orderDoneWithoutError = false;
     let errorMessage = "";
@@ -19,9 +20,9 @@ function writeBroker (type, data, origin) {
             response = [];
 
         if (data) {
-            broker = spawn("broker", ["-t", type, "-q", data]);
+            broker = spawn("hexapod", ["-t", type, "-q", data]);
         } else {
-            broker = spawn("broker", ["-t", type]);
+            broker = spawn("hexapod", ["-t", type]);
         }
         broker.stdout.on("data", (data) => {
             response.push(data.toString());
@@ -46,6 +47,7 @@ function writeBroker (type, data, origin) {
                             orderDoneWithoutError = true;
                         }
                     } else if ("[voltage]" in ln) {
+                        // eslint-disable-next-line prefer-destructuring
                         returnData = ln.split(":")[1];
                     }
                 } else if ("[timeoutError]" in ln) {
@@ -69,7 +71,7 @@ function writeBroker (type, data, origin) {
 
             eventLog.save()
                 .then(() => {
-                    resolve(response, returnData);
+                    resolve(response, returnData, eventLog);
                 })
                 .catch((err) => {
                     reject(err);
@@ -80,16 +82,20 @@ function writeBroker (type, data, origin) {
     return p;
 }
 
+function errorHandler (err) {
+    const error = new Error(err);
+
+    console.log(error);
+}
+
 module.exports.pingHexapod = function (req, res) {
     writeBroker("ping/hexapod", null, req.headers["user-agent"])
         .then((data) => {
             console.log(data);
             res.status(200).send("connection ok");
         })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.pingVoltage = function (req, res) {
@@ -98,12 +104,150 @@ module.exports.pingVoltage = function (req, res) {
             console.log(data, resolveData);
             res.status(200).send("voltage : " + resolveData);
         })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.movementForward = function (req, res) {
-    console.log(req.params);
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("movement/forward", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Movement forward done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.movementBackward = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("movement/backward", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Movement backward done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.movementLeft = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("movement/left", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Movement left done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.movementRight = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("movement/right", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Movement right done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.turnRight = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("turn/right", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Turn right done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.turnLeft = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("turn/left", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Turn left done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.height = function (req, res) {
+    let data = req.params.qty * 2 / 5;
+
+    writeBroker("height", data, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Height modification done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.rotate = function (req, res) {
+    writeBroker("rotate", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Rotate done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.twist = function (req, res) {
+    writeBroker("twist", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Twist done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.move = function (req, res) {
+    writeBroker("move", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Move done");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.wakeup = function (req, res) {
+    writeBroker("action/wakeup", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Wakeup ok");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.standby = function (req, res) {
+    writeBroker("action/standby", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Hexapod in standby");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
+};
+
+module.exports.calibrate = function (req, res) {
+    writeBroker("action/calibrate", null, req.headers["user-agent"])
+        .then((data) => {
+            console.log(data);
+            res.status(200).send("Calibration ok");
+        })
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
