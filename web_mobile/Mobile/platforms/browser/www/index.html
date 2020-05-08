@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/index.css">
+	<meta charset="UTF-8">
+</head>
+<body>
+<script src="js/jquery-1.11.1.min.js"></script>
+<h2>Control Hexapod</h2>
+
+
+<div id="zone"></div>
+<input  style="display:block; margin:auto;" min="1" max="30" type="number" id="quantity" value="1">
+<script>
+      $(function() {
+
+          $.getJSON('actions.json ',function(data){
+            $.each(data.actions, function(index,d){
+            $.each(d, function(i,action){
+            console.log(index);
+            var button = document.createElement("button");
+            button.setAttribute("value",action);
+            button.setAttribute("name",index);
+            button.innerHTML = action;
+            var zone = document.getElementById("zone");
+            zone.appendChild(button)
+            button.addEventListener("click", function() {
+            orderController(action);
+           	 });
+             });
+            });
+          });
+      });
+      function orderController (url) {
+      	var qty= document.getElementById("quantity").value;
+      	qty=Math.min(qty,30);
+      	qty=Math.max(qty,1);
+      	console.log(url,qty);
+      $.ajax({
+      	type: "GET",
+      	url: "http://liendelapi/" + url + '/' + qty,
+      	success: function(data) {
+      		console.log(data);
+      	}
+      });
+      }
+      /*fetch().then((data) => {
+		//data format JSON
+		JSON.parse(data)
+		types = Object.keys(data.actions)
+		types.forEach(type => {
+		type.forEach(action => {
+		button = document.createNode("input")
+		button.setAttribute("onClick", orderController(action))*/
+    </script>
+<div>
+	<img style="display:block; margin:auto;" src="img/Hexapod.jpg" alt="test" />
+</div>
+</body>
+</html>
