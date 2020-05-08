@@ -1,0 +1,26 @@
+// create a db user
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admintest1242",
+    roles: [
+       { role: "readWrite", db: "metal-gear" }
+    ]
+  }
+)
+
+// create a user in database
+db.users.insert(
+    {
+        "_id": "1"
+    	"firstName": "Flavien",
+    	"lastName": "Jalabert",
+    	"email": "fjalabert@test.com",
+    	"username": "fjalabert@test;com",
+    	"password": "metalgear1242*",
+    	"provider": "local",
+    	"salt": "jdbqisdgqsbvsuibvgc",
+    	"roles" : ['user', 'admin'],
+    	""
+    }
+)
