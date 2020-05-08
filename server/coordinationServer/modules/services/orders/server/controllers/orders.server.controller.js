@@ -15,8 +15,9 @@ function writeBroker (type, data, origin) {
 
     let connectionSuccess = false;
 
-    let p = new Promise((resolve, reject) => {
-        let broker = null,
+    return new Promise((resolve, reject) => {
+        // eslint-disable-next-line init-declarations
+        let broker,
             response = [];
 
         if (data) {
@@ -78,8 +79,6 @@ function writeBroker (type, data, origin) {
                 });
         });
     });
-
-    return p;
 }
 
 function errorHandler (err) {
@@ -109,7 +108,8 @@ module.exports.pingVoltage = function (req, res) {
 };
 
 module.exports.movementForward = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("movement/forward", data, req.headers["user-agent"])
         .then((data) => {
@@ -121,7 +121,8 @@ module.exports.movementForward = function (req, res) {
 };
 
 module.exports.movementBackward = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("movement/backward", data, req.headers["user-agent"])
         .then((data) => {
@@ -133,7 +134,8 @@ module.exports.movementBackward = function (req, res) {
 };
 
 module.exports.movementLeft = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("movement/left", data, req.headers["user-agent"])
         .then((data) => {
@@ -145,7 +147,8 @@ module.exports.movementLeft = function (req, res) {
 };
 
 module.exports.movementRight = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("movement/right", data, req.headers["user-agent"])
         .then((data) => {
@@ -157,7 +160,8 @@ module.exports.movementRight = function (req, res) {
 };
 
 module.exports.turnRight = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("turn/right", data, req.headers["user-agent"])
         .then((data) => {
@@ -169,7 +173,8 @@ module.exports.turnRight = function (req, res) {
 };
 
 module.exports.turnLeft = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {qty} = req.params;
+    let data = qty * 2 / 5;
 
     writeBroker("turn/left", data, req.headers["user-agent"])
         .then((data) => {
@@ -181,9 +186,9 @@ module.exports.turnLeft = function (req, res) {
 };
 
 module.exports.height = function (req, res) {
-    let data = req.params.qty * 2 / 5;
+    let {height} = req.params;
 
-    writeBroker("height", data, req.headers["user-agent"])
+    writeBroker("height", height, req.headers["user-agent"])
         .then((data) => {
             console.log(data);
             res.status(200).send("Height modification done");
