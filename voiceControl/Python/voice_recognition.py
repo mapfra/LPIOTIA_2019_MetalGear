@@ -4,7 +4,7 @@ import os
 import requests as r
 from threading import Thread, Event
 from respeaker import Microphone
-from respeaker.bing_speech_api import BingSpeechAPI
+from lib.bing_speech_api import BingSpeechAPI
 
 # use madplay to play mp3 file     
 #os.system('madplay')               
