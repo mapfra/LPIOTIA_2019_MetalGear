@@ -7,7 +7,6 @@ let config = require('../config'),
     http = require('http'),
     https = require('https'),
     cookieParser = require('cookie-parser'),
-    passport = require('passport'),
     socketio = require('socket.io'),
     session = require('express-session'),
     MongoStore = require('connect-mongo')(session);
@@ -92,17 +91,6 @@ module.exports = function (app, db) {
 
                 // Set the Socket.io session information
                 socket.request.session = session;
-
-                // Use Passport to populate the user details
-                passport.initialize()(socket.request, {}, () => {
-                    passport.session()(socket.request, {}, () => {
-                        if (socket.request.user) {
-                            next(null, true);
-                        } else {
-                            next(new Error('User is not authenticated'), false);
-                        }
-                    });
-                });
             });
         });
     });

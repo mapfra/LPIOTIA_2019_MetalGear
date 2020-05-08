@@ -1,5 +1,5 @@
 {
-  "name": "coordServer",
+  "name": "coordserver",
   "version": "1.0.0",
   "description": "Coordination Server",
   "main": "server.js",
@@ -16,7 +16,7 @@
     "ignore": [
       "node_modules/*"
     ],
-    "delay": "10000"
+    "delay": 10000
   },
   "keywords": [
     "Express"
