@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="css/index.css">
 	<meta charset="UTF-8">
 	<title>Lecture et parsing d'un fichier JSON</title>
 	<style>
       #zone {
-        width: 300px;
-        height: 315px;
-        border-style: solid;
-        border-width: 3px;
-        border-color: black;
+     	margin: auto;
+  		width: 50%;
+  		border: 3px solid green;
+  		padding: 10px;
       }
     </style>
 </head>
@@ -19,10 +19,11 @@
 
 
 <div id="zone"></div>
-<input min="1" max="30" type="number" id="quantity" value="1">
+<input  style="display:block; margin:auto;" min="1" max="30" type="number" id="quantity" value="1">
 <script>
       $(function() {
-          $.getJSON('test.json',function(data){
+
+          $.getJSON('actions.json ',function(data){
             $.each(data.actions, function(index,d){
             $.each(d, function(index,action){
             console.log(action);
@@ -60,5 +61,8 @@
 		button = document.createNode("input")
 		button.setAttribute("onClick", orderController(action))*/
     </script>
+<div>
+	<img style="display:block; margin:auto;" src="img/Hexapod.jpg" alt="test" />
+</div>
 </body>
 </html>
