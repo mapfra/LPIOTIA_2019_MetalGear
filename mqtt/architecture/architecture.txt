@@ -1,8 +1,0 @@
-using the default template for mosquitto, launching the broker then subscribing to topics :
-
-home/respeaker/voice/action/{actionName}
-home/mobile/control/action/{actionName}
-home/respeaker/voice/command/{commandName}
-home/mobile/control/command/{commandName}
-
-InfluxDB connected to data home/* and listening every event to log
