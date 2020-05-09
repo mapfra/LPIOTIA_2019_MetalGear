@@ -18,6 +18,10 @@ module.exports.loadModels = function loadModels () {
 module.exports.init = function init (callback) {
     mongoose.connect((db) => {
     // Initialize express
+        db.on('error', console.error.bind(console, 'connection error:'));
+        db.once('open', () => {
+            console.log('Connection to mongoDB openned !');
+        });
         let app = express.init(db);
 
         if (callback) {
@@ -25,6 +29,7 @@ module.exports.init = function init (callback) {
         }
 
     });
+    mongoose.Promise = global.Promise;
 };
 
 module.exports.start = function start (callback) {
