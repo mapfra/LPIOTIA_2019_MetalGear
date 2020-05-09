@@ -71,11 +71,13 @@ function writeBroker (type, data, origin) {
                 errorMessage,
                 desc
             });
-            
-            console.log(eventLog);
 
-            eventLog.save();
-            
+            eventLog.save((err, doc) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+
             if (errorMessage) {
                 reject(errorMessage);
             } else {
