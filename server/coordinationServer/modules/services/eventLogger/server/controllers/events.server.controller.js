@@ -5,16 +5,16 @@ const mongoose = require('mongoose');
 const eventLog = mongoose.model('logs');
 
 module.exports.eventLogger = function (req, res) {
-    let startDate = req.query.startDate || new Date(new Date() - (1000 * 60));
+    let startDate = req.query.startDate || new Date(new Date() - (1000 * 60 * 60 * 24));
     let endDate = req.query.endDate || new Date();
 
     startDate = new Date(startDate);
     endDate = new Date(endDate);
 
-    eventLog.find({date: {
-        "$gte" : startDate,
-        "$lte" : endDate
-    }}, (err, doc) => {
+    eventLog.find(/*{date: {
+        $gt : startDate,
+        $lt : endDate
+    }}, */(err, doc) => {
         if (err) {
             console.log(err);
             res.status(500).send({error : err});

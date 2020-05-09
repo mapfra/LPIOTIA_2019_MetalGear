@@ -37,29 +37,27 @@ function writeBroker (type, data, origin) {
         });
         broker.on('close', (code) => {
             console.log(`child process exited with code ${code}`);
-            response.forEach((commands) => {
-                commands.split("\n").forEach((ln) => {
-                    if (ln.indexOf("[connected]") !== -1 || connectionSuccess) {
-                        connectionSuccess = true;
-                        if (ln.indexOf("[wrongType]") !== -1) {
-                            errorMessage = "WrongTypeProvided";
-                        } else if (ln.indexOf("[orderStart]") !== -1 || orderTransOk) {
-                            orderTransOk = true;
-                            if (ln.indexOf("[orderDone]") !== -1) {
-                                orderDoneWithoutError = true;
-                            }
-                        } else if (ln.indexOf("[voltage]") !== -1) {
-                            // eslint-disable-next-line prefer-destructuring
-                            returnData = ln.split(":")[1];
+            response.forEach((ln) => {
+                if ("[connected]" in ln || connectionSuccess) {
+                    connectionSuccess = true;
+                    if ("[wrongType]" in ln) {
+                        errorMessage = "WrongTypeProvided";
+                    } else if ("[orderStart]" in ln || orderTransOk) {
+                        orderTransOk = true;
+                        if ("[orderDone]" in ln) {
+                            orderDoneWithoutError = true;
                         }
-                    } else if (ln.indexOf("[timeoutError]") !== -1) {
-                        errorMessage = "TimeoutError";
-                    } else if (ln.indexOf("[badData]") !== -1) {
-                        errorMessage = "Unexpected Error" + ln;
-                    } else if (ln.indexOf("[otherData]") !== -1) {
-                        desc = ln;
+                    } else if ("[voltage]" in ln) {
+                        // eslint-disable-next-line prefer-destructuring
+                        returnData = ln.split(":")[1];
                     }
-                });
+                } else if ("[timeoutError]" in ln) {
+                    errorMessage = "TimeoutError";
+                } else if ("[badData]" in ln) {
+                    errorMessage = "Unexpected Error" + ln;
+                } else if ("[otherData]" in ln) {
+                    desc = ln;
+                }
             });
 
             const eventLog = new EventLog({
@@ -72,17 +70,15 @@ function writeBroker (type, data, origin) {
                 desc
             });
 
-            eventLog.save((err, doc) => {
-                if (err) {
-                    console.log(err);
-                }
-            });
+	
 
-            if (errorMessage) {
-                reject(errorMessage);
-            } else {
-                resolve(response, returnData, eventLog);
-            }
+            eventLog.save()
+                .then(() => {
+                    resolve(response, returnData, eventLog);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
         });
     });
 }
@@ -99,10 +95,8 @@ module.exports.pingHexapod = function (req, res) {
             console.log(data);
             res.status(200).send("connection ok");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.pingVoltage = function (req, res) {
@@ -111,10 +105,8 @@ module.exports.pingVoltage = function (req, res) {
             console.log(data, resolveData);
             res.status(200).send("voltage : " + resolveData);
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.movementForward = function (req, res) {
@@ -126,10 +118,8 @@ module.exports.movementForward = function (req, res) {
             console.log(data);
             res.status(200).send("Movement forward done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.movementBackward = function (req, res) {
@@ -141,10 +131,8 @@ module.exports.movementBackward = function (req, res) {
             console.log(data);
             res.status(200).send("Movement backward done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.movementLeft = function (req, res) {
@@ -156,10 +144,8 @@ module.exports.movementLeft = function (req, res) {
             console.log(data);
             res.status(200).send("Movement left done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.movementRight = function (req, res) {
@@ -171,10 +157,8 @@ module.exports.movementRight = function (req, res) {
             console.log(data);
             res.status(200).send("Movement right done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.turnRight = function (req, res) {
@@ -186,10 +170,8 @@ module.exports.turnRight = function (req, res) {
             console.log(data);
             res.status(200).send("Turn right done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.turnLeft = function (req, res) {
@@ -201,10 +183,8 @@ module.exports.turnLeft = function (req, res) {
             console.log(data);
             res.status(200).send("Turn left done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.height = function (req, res) {
@@ -215,10 +195,8 @@ module.exports.height = function (req, res) {
             console.log(data);
             res.status(200).send("Height modification done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.rotate = function (req, res) {
@@ -227,10 +205,8 @@ module.exports.rotate = function (req, res) {
             console.log(data);
             res.status(200).send("Rotate done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.twist = function (req, res) {
@@ -239,10 +215,8 @@ module.exports.twist = function (req, res) {
             console.log(data);
             res.status(200).send("Twist done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.move = function (req, res) {
@@ -251,10 +225,8 @@ module.exports.move = function (req, res) {
             console.log(data);
             res.status(200).send("Move done");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.wakeup = function (req, res) {
@@ -263,10 +235,8 @@ module.exports.wakeup = function (req, res) {
             console.log(data);
             res.status(200).send("Wakeup ok");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.standby = function (req, res) {
@@ -275,10 +245,8 @@ module.exports.standby = function (req, res) {
             console.log(data);
             res.status(200).send("Hexapod in standby");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };
 
 module.exports.calibrate = function (req, res) {
@@ -287,8 +255,6 @@ module.exports.calibrate = function (req, res) {
             console.log(data);
             res.status(200).send("Calibration ok");
         })
-        .catch((err) => {
-            errorHandler(err);
-            res.redirect("/server-error");
-        });
+        .catch(errorHandler);
+    res.redirect("/server-error");
 };

@@ -10,7 +10,9 @@ from lib.bing_speech_api import BingSpeechAPI
 BING_KEY = '7ffd373b500f4ad498994103de1c865b'
 HOST = 'http://127.0.0.1:3000'
  
-def getQuantityFromString(text):
+def getQuantityFromString(bing):
+    text = bing.encode('ascii','ignore')
+    
     depCentimetre = dict()
     #Pour les centimetres
     depCentimetre['dix'] = 10
@@ -34,15 +36,21 @@ def getQuantityFromString(text):
     depMetre['sept'] = 700
     depMetre['huit'] = 800
     depMetre['neuf'] = 900
- 
-    if 'centimètres' or 'centimètre' in text:
-        for cle in depCentimetre.keys():
-            if cle in text:
-                return str(depCentimetre[cle])
-    if 'mètres' or 'mètre' in text:
+    
+    if " mtre" in text:
         for cle in depMetre.keys():
             if cle in text:
+                print("clef existante")
                 return str(depMetre[cle])
+        print("mètre reconnu mais pas de clef")
+ 
+    if ' centimtre' in text:
+        for cle in depCentimetre.keys():
+            if cle in text:
+                print("clef existante")
+                return str(depCentimetre[cle])
+        print("centimètre reconnu mais pas de clef")
+    print("pas d'action reconnue")
     return '10'
  
 def task(quit_event):
@@ -56,7 +64,7 @@ def task(quit_event):
                 if text:
                     print('\n\nRecognized %s\n' % text)
                     qty = getQuantityFromString(text)
-		    print(qty)
+                    print("Quantite: " + qty)
                 if 'avance' in text:
                     API_ENDPOINT = HOST+"/movement/forward/" + qty
                     res = r.get(API_ENDPOINT)

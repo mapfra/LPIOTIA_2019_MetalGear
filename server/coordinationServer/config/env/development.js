@@ -6,7 +6,7 @@ module.exports = {
     db: {
         uri: process.env.MONGOHQ_URL || process.env.MONGOLAB_URI_DEV || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/metalgear-dev',
         options: {
-            useNewUrlParser: true
+            useMongoClient: true
             // user: 'admin',
             // pass: 'admindev1242'
         },

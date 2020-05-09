@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const {Schema} = mongoose;
 
-const Log = new Schema({
+const Log = Schema({
     date : {
         type: Date
     },
@@ -38,10 +38,6 @@ const Log = new Schema({
     }
 }, {
     collection: 'logs'
-});
-
-Log.pre("save", (next) => {
-    this.id = Math.random() * 1000000000;
 });
 
 module.exports = mongoose.model('logs', Log);
