@@ -9,6 +9,7 @@ let config = require('../config'),
     logger = require('./logger'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
+    cors = require('cors'),
     MongoStore = require('connect-mongo')(session),
     favicon = require('serve-favicon'),
     compress = require('compression'),
@@ -62,6 +63,9 @@ module.exports.initMiddleware = function (app) {
 
     // Initialize favicon middleware
     app.use(favicon(app.locals.favicon));
+
+    // Disable CORS
+    app.use(cors());
 
     // Enable logger (morgan)
     app.use(morgan(logger.getFormat(), logger.getOptions()));
