@@ -19,7 +19,7 @@ Pour obtenir une clé API, il faudra vous rendre ici :
 - https://azure.microsoft.com/fr-fr/services/cognitive-services/speech-services/
 
 Afin que le script fonctionne correctement, ouvrez le script voice_recognition.py et modifiez la varaible "BING_KEY" et attribuez lui la
-valeur de votre key reçue sur votre compte AZURE.
+valeur de votre clé API reçue sur votre compte AZURE.
 
 Ainsi, le script devrait fonctionner automatiquement désormais.
 
@@ -35,10 +35,12 @@ PS: Vous pouvez parler à 60 CM du microphone de la respeaker et même un peu pl
 Le terminal va afficher des erreurs ALSA puis vous attendez 4 secondes environ et commencez à parler à côté du microphone de
 votre respeaker.
 
-Donc, si tout se passe bien vous devriez avoir : "Recognized :" + ce que vous dites à haute voix
+Donc, si tout se passe bien vous devriez avoir dans votre terminal : "Recognized :" + ce que vous dites à haute voix
 
 Ainsi, si vous dites par exemple : "ok hexapod, avance de trente centimètres" il devrait envoyer un ping au bon URL de l'API de Flavien
 avec les bonnes données avec la quantité de mouvement (en cm) donc : qty = 30 dans notre cas.
+
+Donc dans le terminal vous aurez : "Recognized : ok hexapod, avance de trente centimètres".
 
 Comment être sur que l'API fonctionne correctement ?
 
