@@ -1,23 +1,23 @@
-# Project Voice Controled Hexapod (VCH metal gear)
+# Project Voice Controled Hexapod (VCH métal gear)
 ___
-## Overview
-This project is about to be able to control the [freenove hexapod](https://github.com/Freenove/Freenove_Hexapod_Robot_Kit) by voice using the [ReSpeaker](http://wiki.seeedstudio.com/ReSpeaker/) mounted on a raspberry pi 3 and a custom CLI.
+## Aperçu
+Ce projet est sur le point de pouvoir contrôler le [freenove hexapod] (https://github.com/Freenove/Freenove_Hexapod_Robot_Kit) par la voix en utilisant le [ReSpeaker] (http://wiki.seeedstudio.com/ReSpeaker/) monté sur une Raspberry pi 3 et une CLI personnalisée.
 
-To do so, this project is containing the code for a custom CLI in the folder *"broker"*, the code for the freenove hexapod in *"arduino"*, the code for the ReSpeaker in *"voiceControl"*, the node REST micro service in *"server"* and the web/mobile code in *"web_mobile"*.
+Pour ce faire, ce projet contient le code d'une CLI personnalisée dans le dossier * "broker" *, le code de l'hexapode freenove dans * "arduino" *, le code du ReSpeaker dans * "voiceControl" *, le nœud Micro service REST dans * "serveur" * et le code web / mobile dans * "web_mobile" *.
 
-The custom CLI will be hosted along node server (REST micro service based on Node.js with [express](https://www.npmjs.com/package/express) and the voice control ReSpeaker daemon (based on python).
-All three of them will be communicating via the coordination Server who will parse all the requested commands and ask the custom CLI to remote control the freenove hexapod over wifi. (note that the raspberry pi 3 and the freenove hexapod have to be set on the same network to be able to communicate)
+La CLI personnalisée sera hébergée avec le serveur de nœuds (micro-service REST basé sur Node.js avec [express] (https://www.npmjs.com/package/express) et le démon ReSpeaker de contrôle vocal (basé sur python).
+Tous les trois communiqueront via le serveur de coordination qui analysera toutes les commandes demandées et demandera à la CLI personnalisée de contrôler à distance l'hexapode freenove via wifi. (notez que le raspberry pi 3 et l'hexapode freenove doivent être configurés sur le même réseau pour pouvoir communiquer)
 
-The web and mobile application will show the event log and charts about the freenove hexapod to follow the evolution and metrics of the robot, the mobile app will specifically be able to control the freenove hexapod.
+L'application Web et mobile affichera le journal des événements et des graphiques sur l'hexapode freenove pour suivre l'évolution et les métriques du robot, l'application mobile pourra spécifiquement contrôler l'hexapode freenove.
 
 ___
 ## Installation
 
-As explained before, the node server, the custom CLI and the ReSpeaker daemon need to be installed on the raspberry pi 3, the arduino code needs to be uploaded on the freenove hexapod and the web and mobile applications can be installed on any end device. (Specifications for each projects can be found in their respective forlders)
+Comme expliqué précédemment, le serveur de noeud, la CLI personnalisée et le démon ReSpeaker doivent être installés sur le raspberry pi 3, le code arduino doit être téléchargé sur l'hexapode freenove et les applications Web et mobiles peuvent être installées sur n'importe quel appareil final. (Les spécifications de chaque projet peuvent être trouvées dans leurs dossiers respectifs)
 
 ___
 ## Evolutions
 
- * A camera could be installed on the freenove hexapod to have an OTT streaming flow
- * The raspberry pi 3 and the freenove hexapod could be installed on a VPN so they don't have to be on the same network nor in range of each other
- * The mobile app could have a speech recognition system so it could remote control the freenove hexapod using voice as well
+ * Une caméra pourrait être installée sur l'hexapode freenove pour avoir un flux de diffusion OTT
+ * Le raspberry pi 3 et l'hexapode freenove peuvent être installés sur un VPN afin qu'ils n'aient pas à être sur le même réseau ni à portée l'un de l'autre
+ * L'application mobile pourrait avoir un système de reconnaissance vocale pour contrôler à distance l'hexapode freenove à l'aide de la voix
