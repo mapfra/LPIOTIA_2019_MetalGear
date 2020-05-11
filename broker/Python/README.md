@@ -27,5 +27,5 @@ PS: Chmod +x permet de lancer l'execution du fichier sans avoir besoin de faire 
 Suite à celà, vous pourrez tester en ouvrant un nouveau terminal de taper la commande hexapod -t "movement/foward" -q 20
 et vous aurez un [timeoutError] car le broker n'aura pas réussi à se connecter à l'hexapod en wifi.
 
-Allumez donc votre hexapod et connectez vous en wifi ad hoc via la rasberry au SSID Freenove et re-lancez
+Allumez donc votre hexapod et connectez vous en wifi ad hoc via la raspberry au SSID Freenove et re-lancez
 la commande hexapod dans un terminal.
