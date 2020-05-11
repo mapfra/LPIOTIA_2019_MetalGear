@@ -26,7 +26,7 @@ Pour executer le script vous aurez besoin d'executer les commandes suivantes :
 Le terminal va afficher des erreurs ALSA puis vous attendez 4 secondes environ et commencez à parler à côté du microphone de
 votre respeaker.
 
-Si tout se passe bien vous devriez avoir : "Recognized :" + ce que vous dites a haute voix
+Si tout se passe bien vous devriez avoir : "Recognized :" + ce que vous dites à haute voix
 
 Ainsi, si vous dites par exemple : "ok hexapod, avance de trente centimètres" il devrait envoyer un ping au bon URL de l'API de Flavien
 avec les bonnes données avec la quantité de mouvement (en cm) donc : qty = 30 dans notre cas.
