@@ -2,13 +2,13 @@ Partie faite par : Hervé Louis
 
 Alors vous vous demandez déjà pourquoi le fichier n'a pas d'extension ?
 
-C'est bel est bien un fichier python mais il ne possède pas d'extension car il est conçu pour être considéré comme une ligne
+- C'est bel est bien un fichier python mais il ne possède pas d'extension car il est conçu pour être considéré comme une ligne
 de commande par la raspberry.
 
-En fait le but est d'ouvrir un terminal au hasard et de taper la commande hexapod -t "movement/foward" -q 20
+- En fait le but est d'ouvrir un terminal au hasard et de taper la commande hexapod -t "movement/foward" -q 20
 par exemple et que le terminal lance le script automatiquement.
 
-Comme ça l'API de Flavien peut écrire dans un terminal quelconque la commande hexapode et le terminal saura ou aller chercher le script
+- Comme ça l'API de Flavien peut écrire dans un terminal quelconque la commande hexapode et le terminal saura ou aller chercher le script
 dans la raspberry.
 
 Ok mais que faire du fichier sans extension "hexapod" ?
