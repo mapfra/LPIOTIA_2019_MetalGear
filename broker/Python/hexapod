@@ -69,73 +69,73 @@ def action():
 		return 0
 	
 	if _type == "movement":
-		print("[crawl]")
 		sendHexapod(110, True)
+		print("[crawl]")
 		return 0
 	
 	if _type == "movement/forward":
-		print("[crawlForward]")
 		sendHexapod(80, True)
+		print("[crawlForward]")
 		return 0
 			
 	if _type == "movement/backward":
-		print("[crawlBackward]")
 		sendHexapod(82, True)
+		print("[crawlBackward]")
 		return 0
 
 	if _type == "movement/left":
-		print("[crawlLeft]")
 		sendHexapod(84, True)
+		print("[crawlLeft]")
 		return 0
 
 	if _type == "movement/right":
-		print("[crawlRight]")
 		sendHexapod(86, True)
+		print("[crawlRight]")
 		return 0
 
 	if _type == "action/calibrate":
-		print("[calibrate]")
 		sendHexapod(32)
+		print("[calibrate]")
 		return 0
 
 	if _type == "action/wakeup":
-		print("[activeMode]")
 		sendHexapod(92)
+		print("[activeMode]")
 		return 0
 
 	if _type == "action/standby":
-		print("[sleepMode]")
 		sendHexapod(94)
+		print("[sleepMode]")
 		return 0
 
 	if _type == "turn/left":
-		print("[turnRight]")
 		sendHexapod(88)
+		print("[turnRight]")
 		return 0
 
 	if _type == "turn/right":
-		print("[turnRight]")
 		sendHexapod(90)
+		print("[turnRight]")
 		return 0
 
 	if _type == "height":
-		print("[changeBodyHeight]")
 		sendHexapod(112)
+		print("[changeBodyHeight]")
 		return 0
 
 	if _type == "move":
-		print("[moveBody]")
 		sendHexapod(114)
+		print("[moveBody]")
 		return 0
 
 	if _type == "rotate":
-		print("[rotateBody]")
 		sendHexapod(116)
+		print("[rotateBody]")
 		return 0
 
 	if _type == "twist":
-		print("[twistBody]")
 		sendHexapod(118)
+		print("[twistBody]")
 		return 0
 
 	#Dans le cas ou on rentre dans aucune condition
