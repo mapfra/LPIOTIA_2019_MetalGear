@@ -1,0 +1,9 @@
+Phase d'installation:
+Telecharger node js https://nodejs.org/dist/v12.16.3/node-v12.16.3-x64.msi
+Installer les variables environnement JAVA-HOME 
+Telecharger Cordova
+Telecharger android Studio
+Faire cordova platform add android et browser
+Importer le projet dans Android Studio 
+Executer le projet avec la commande cordova run browser
+Le projet se lance sur google 
