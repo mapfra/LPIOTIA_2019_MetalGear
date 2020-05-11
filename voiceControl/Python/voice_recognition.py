@@ -5,12 +5,14 @@ import time
 import requests as r
 from threading import Thread, Event
 from respeaker import Microphone
+#On va chercher la librairie dans le dossier lib présent ici
 from lib.bing_speech_api import BingSpeechAPI
  
 BING_KEY = '7ffd373b500f4ad498994103de1c865b'
 HOST = 'http://127.0.0.1:3000'
  
 def getQuantityFromString(bing):
+    #On ignore les accents car cela générait des problèmes
     text = bing.encode('ascii','ignore')
     
     depCentimetre = dict()
@@ -37,6 +39,7 @@ def getQuantityFromString(bing):
     depMetre['huit'] = 800
     depMetre['neuf'] = 900
     
+    #mtre car on à enlevé les accents
     if " mtre" in text:
         for cle in depMetre.keys():
             if cle in text:
@@ -44,13 +47,15 @@ def getQuantityFromString(bing):
                 return str(depMetre[cle])
         print("mètre reconnu mais pas de clef")
  
-    if ' centimtre' in text:
+    #centimtre car on à enlevé les accents
+    if " centimtre" in text:
         for cle in depCentimetre.keys():
             if cle in text:
                 print("clef existante")
                 return str(depCentimetre[cle])
         print("centimètre reconnu mais pas de clef")
-    print("pas d'action reconnue")
+    print("aucune action n'est reconnue")
+    #Dans le cas ou il ne se passe rien il renvoi 10 (en CM)
     return '10'
  
 def task(quit_event):
@@ -62,7 +67,7 @@ def task(quit_event):
             try:
                 text = bing.recognize(data)
                 if text:
-                    print('\n\nRecognized %s\n' % text)
+                    print('\n\nRecognized : %s\n' % text)
                     qty = getQuantityFromString(text)
                     print("Quantite: " + qty)
                 if 'avance' in text:
@@ -137,6 +142,7 @@ def main():
         try:
             time.sleep(1)
         except KeyboardInterrupt:
+            #Si on fait CTRL + C pour quitter
             print('Quit')
             quit_event.set()
             break
